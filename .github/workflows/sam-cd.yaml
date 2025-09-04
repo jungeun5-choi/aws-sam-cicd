@@ -31,7 +31,6 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.SAM_ROLE_NAME }}
           role-session-name: github-${{ github.actor }}-${{ github.run_id }}
           aws-region: ${{ secrets.AWS_REGION }}
-          debug-logging: true
       
       - name: SAM Validate
         run: |
