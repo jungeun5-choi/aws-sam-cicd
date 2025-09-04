@@ -3,6 +3,8 @@ name: CD - Deploy to AWS
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - '**/*.md'       # 모든 markdown 파일 무
 
 jobs:
   deploy:
