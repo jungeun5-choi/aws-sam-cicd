@@ -16,10 +16,10 @@ capabilities = "CAPABILITY_IAM"
 confirm_changeset = false
 resolve_s3 = true
 
-[prod.package.parameters] 
+[main.package.parameters] 
 s3_bucket = "sam-deploy-bucket-prod"
 
-[prod.deploy.parameters]
+[main.deploy.parameters]
 stack_name = "sam-stack-prod"
 capabilities = "CAPABILITY_IAM"
 confirm_changeset = false
