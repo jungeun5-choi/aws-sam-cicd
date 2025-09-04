@@ -4,7 +4,11 @@ on:
   push:
     branches: [ main ]
     paths-ignore:
-      - '**/*.md'       # 모든 markdown 파일 무
+      - '**/*.md'       # 모든 markdown 파일 무시
+
+permissions:
+  contents: read
+  id-token: write 
 
 jobs:
   deploy:
