@@ -1,8 +1,8 @@
 # aws-sam-cicd
 
 ## requirements
-- [AWS SAM CLI]()
-- [Docker Desktop]()
+- [AWS SAM CLI](https://docs.aws.amazon.com/ko_kr/serverless-application-model/latest/developerguide/prerequisites.html)
+- [Docker Desktop](https://docs.aws.amazon.com/ko_kr/serverless-application-model/latest/developerguide/install-docker.html#install-docker-instructions)
 
 ## Run
 ```cmd
