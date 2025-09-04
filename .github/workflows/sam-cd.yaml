@@ -7,7 +7,6 @@ on:
 jobs:
   deploy:
     if: github.event_name == 'push'
-    needs: build-and-test
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.ref_name == 'main' || 'prod' }}
