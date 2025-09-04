@@ -1,0 +1,49 @@
+name: CD - Deploy to AWS
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    if: github.event_name == 'push'
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.ref_name == 'main' || 'prod' }}
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Install AWS SAM CLI
+        uses: aws-actions/setup-sam@v2
+        with:
+          version: latest
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.SAM_ROLE_NAME }}
+          role-session-name: github-${{ github.actor }}-${{ github.run_id }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      
+      - name: SAM Validate
+        run: |
+          sam validate
+      
+      - name: SAM Build
+        run: |
+          sam build
+
+      # The 'sam deploy' command automatically packages the application before deploying
+      # Starting with SAM CLI v1.0, packaging is integrated into the deploy step
+      # --resolve-s3 flag automatically creates/uses an S3 bucket for deployment artifacts
+      - name: SAM package and deploy
+        run: |
+          sam deploy --config-env ${{ github.ref_name }} --no-confirm-changeset --resolve-s3
